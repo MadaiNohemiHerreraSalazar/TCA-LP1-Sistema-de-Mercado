@@ -20,9 +20,47 @@ public class Trabalho4BI_CaixaDeMercado {
         return valor;
     }
 
+    public static String lerTexto() {
+        String texto = tecladoScanner.next();
+        return texto;
+    }
+
     public static void imprimir(String mensagem) {
         System.out.println(mensagem);
     }
+
+
+
+    public static String[] passarProdutos(String[][] precosProdutos){
+
+        //metodo para Scannear codigos e verificar se estão no sistema
+
+        String[] produtosEscolhidos;
+
+        String produto;
+        
+         for(int i = 0; i < precosProdutos.length; i++){
+
+                produto = lerTexto();
+
+                if(produto == precosProdutos[i][0]){
+
+                    produtosEscolhidos[i] = produto;
+                }else{
+                    System.out.println("Produto não achado. Tente novamente");
+                }
+            }
+
+
+
+
+        
+
+
+        }
+
+
+    
 
     
     public static String[][] criarTabelaPrecos (){
