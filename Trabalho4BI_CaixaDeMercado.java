@@ -44,6 +44,8 @@ public class Trabalho4BI_CaixaDeMercado {
       return precosProdutos;
     }
 
+    
+
     public static String[][] criarTabelaClienteClube (){
 
         //[6][2]
@@ -172,6 +174,21 @@ public class Trabalho4BI_CaixaDeMercado {
                 break;
         }
     }
+
+
+    public static void imprimirNotaFiscal(){
+
+        //impresão da nota fiscal
+
+        System.out.print("________________________________\n"+
+                        "|    M3 Comercio de Alimentos    |\n"+
+                        "|      Centro, Cascavel Pr       |\n"+
+                        "|________________________________|\n"+
+                        "|--------------------------------|\n");
+
+
+                        for
+    }
     
 
     public static void main(String[] args) {
@@ -183,7 +200,7 @@ public class Trabalho4BI_CaixaDeMercado {
         imprimir("Imprimir nota fiscal? 0 para nao 1 para sim");
         boolean finalizar = lerBoolean();
         if (finalizar == true) {
-            //imprimir nota()
+            imprimirNotaFiscal();
         }
 
         imprimir("OPERAÇÃO FINALIZADA");
