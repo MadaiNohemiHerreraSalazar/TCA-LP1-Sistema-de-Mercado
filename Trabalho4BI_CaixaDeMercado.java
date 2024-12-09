@@ -47,7 +47,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
                     produtosEscolhidos[i] = produto;
                 }else{
-                    System.out.println("Produto não achado. Tente novamente");
+                    System.out.println("Produto não achado. Tente novamente");;
                 }
             }
 
