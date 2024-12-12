@@ -36,41 +36,48 @@ public class Trabalho4BI_CaixaDeMercado {
         }
     }
 
-    public static String[] aumentarVetor(String[] produtosEscolhidos) {
-
+    public static String[][] aumentarVetor(String[][] matrizMae) {
         //metodo que verifica se o vetor encheu, se sim, aumenta o tamanho.
 
-        if (produtosEscolhidos[produtosEscolhidos.length - 1] != " ") {
+        int linhas = matrizMae.length;
+        int colunas = matrizMae [0].length;
 
-            String[] vetorAumentado;
-        vetorAumentado = new String[produtosEscolhidos.length + 10];
+        if (matrizMae[linhas - 1][colunas] != " ") {
 
-        for (int i = 0; i < vetorAumentado.length; i++) {
+            String[][] matrizAumentada = new String[linhas + 10][colunas];
 
-            vetorAumentado[i] = produtosEscolhidos[i];
+            for (int i = 0; i < linhas; i++) {
+                for(int j = 0; j < linhas; j++){
+
+                    matrizAumentada[i][j] = matrizMae[i][j];}
+
+            }
+
+            return matrizAumentada;
         }
 
-        return vetorAumentado;
-        }
-
-        return produtosEscolhidos;
+        return matrizMae;
     }
 
-    public static String[] criarVetorPreenchido(int tamanho, String valorPreenchimento) {
 
 
-        String[] vetor;
-        vetor = new String[tamanho];
+    public static String[][] criarMatrizPreenchida(int linhas, int colunas, String valorPreenchimento) {
 
-        for (int i = 0; i < vetor.length; i++) {
-            vetor[i] = valorPreenchimento;
+
+        String[][] matriz = new String[linhas][colunas];
+
+        for (int i = 0; i < linhas; i++) {
+            for(int j = 0; j < colunas; j++) {
+                matriz[i][j] = valorPreenchimento;
+            }
+            
 
         }
 
-        return vetor;
+        return matriz;
     }
 
-    public static String[] acharProdutoSistema(String[] produtosEscolhidos, String produto) {
+    public static String[][] acharProdutoSistema(String[][] produtosEscolhidos, String produto) {
 
         //Verificar se os produtos estâo no sistema
 
@@ -79,7 +86,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
                 if (produto == obterTabelaPrecos()[i][1]) {
 
-                    produtosEscolhidos[i] = obterTabelaPrecos()[i][1];
+                    produtosEscolhidos[i][1] = obterTabelaPrecos()[i][1];
 
                 } else {
                     System.out.println("Produto não achado. Tente novamente");
@@ -92,13 +99,11 @@ public class Trabalho4BI_CaixaDeMercado {
         
     }
 
-    public static String[] passarProdutos() {
+    public static String[][] passarProdutos() {
 
         // metodo para Scannear codigos 
 
-        String[] produtosEscolhidos;
-        
-        produtosEscolhidos = criarVetorPreenchido(10, " ");
+        String[][] produtosEscolhidos = criarMatrizPreenchida(10, 2, " ");
 
         String produto;
 
@@ -122,15 +127,34 @@ public class Trabalho4BI_CaixaDeMercado {
 
     }
 
-    public static void verificarProdutosDesconto(String[] produtosEscolhidos, String[][] produtosPromocao){
+    public static String[][] verificarProdutosDesconto(String[][] produtosEscolhidos, String[][] produtosPromocao){
 
         for (int i = 0; i < produtosEscolhidos.length; i++) {
 
+            for (int j = 0; j < produtosEscolhidos.length; j++){
+                if (produtosEscolhidos[i][j] == produtosPromocao[j][3]) {
+                    produtosEscolhidos[i][j] = produtosPromocao[j][3];
+                } 
+            }
+        }
+
+        return produtosEscolhidos;
+    }
+
+    public static float somaPreçoTotal(String[][] produtosEscolhidos, String[][] produtosCompraPromocao){
+
+        float somaPrecoTotal = 0;
+
+
+        for(int i = 0; i < produtosEscolhidos.length; i++){
+
+            somaPrecoTotal = somaPrecoTotal + Float.parseFloat(produtosEscolhidos[i][1]);
         }
 
 
-    }
 
+        return somaPrecoTotal;
+    }
 
     public static String[][] obterTabelaPrecos() {
 
@@ -140,13 +164,13 @@ public class Trabalho4BI_CaixaDeMercado {
                 { "Leite", "70081529", "4,69" },
                 { "Leite Condensado", "70081678", "6,99" },
                 { "Pão de Forma", "89001698", "5,94" },
-                { "Arroz emb5kg", "00001608", "25,98" },
-                { "Feijão emb1kg", "00112013", "6,68" },
+                { "Arroz (5kg)", "00001608", "25,98" },
+                { "Feijão (1kg)", "00112013", "6,68" },
                 { "Mandioca  (500g)", "11112034", "8,99" },
                 { "Creme de Leite", "70083254", "3,19" },
-                { "Sabão em Pó emb1kg", "98780047", "27,99" },
-                { "Macarrão Espaguete emb1kg", "89002140", "6,79" },
-                { "Refrigerante de Limão", "59021124", "5,59" }
+                { "Sabão em Pó (1kg)", "98780047", "27,99" },
+                { "Macarrão Espaguete (1kg)", "89002140", "6,79" },
+                { "Refrigerante de Limão(2L)", "59021124", "5,59" }
         };
         return precosProdutos;
     }
@@ -156,11 +180,11 @@ public class Trabalho4BI_CaixaDeMercado {
         // [6][2]
         String[][] clientesClube = {
                 { "Nome Cliente", "CPF" },
-                { "Ana Beatriz da Silva", "123.456.789-09" },
-                { "João Pedro Oliveira", "987.654.321-00" },
-                { "Cláudia Costa Ferreira", "456.123.789-32" },
-                { "Carlos Eduardo Almeida", "321.654.987-45" },
-                { "Sofia Ribeiro Santos", "789.123.456-87" }
+                { "Ana Beatriz da Silva", "123.456.78909" },
+                { "João Pedro Oliveira", "98765432100" },
+                { "Cláudia Costa Ferreira", "45612378932" },
+                { "Carlos Eduardo Almeida", "32165498745" },
+                { "Sofia Ribeiro Santos", "78912345687" }
         };
 
         return clientesClube;
@@ -178,13 +202,12 @@ public class Trabalho4BI_CaixaDeMercado {
 
         switch (estação) {
             case 1:
-                // [4][4]
+                // [3][4]
                 String[][] produtosPromocaoOutono = {
 
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
-                        { "Mandioca (500g)", "R$8,99", "8%", "R$8,27" },
-                        { "Macarrão Espaguete (1kg)", "R$6,79", "3%", "R$6,59" },
-                        { "Feijão (1kg)", "R$6,68", "9%", "R$6,08" },
+                        { "11112034", "R$8,99", "8%", "R$8,27" },
+                        { "00112013", "R$6,68", "9%", "R$6,08" },
                 };
 
                 return produtosPromocaoOutono;
@@ -193,8 +216,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 // [3][4]
                 String[][] produtosPromocaoinverno = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
-                        { "Creme de Leite", "R$3,19", "7%", "R$2,97" },
-                        { "Leite", "R$4,69", "5%", "R$4,46" },
+                        { "70083254", "R$3,19", "7%", "R$2,97" },
+                        { "70081529", "R$4,69", "5%", "R$4,46" },
 
                 };
                 return produtosPromocaoinverno;
@@ -203,8 +226,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 // [3][4]
                 String[][] produtosPromocaoPrimavera = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
-                        { "Pão de Forma", "R$5,94", "10%", "R$5,35" },
-                        { "Sabão em Pó (1kg)", "R$27,99", "9%", "R$25,47" },
+                        { "89001698", "R$5,94", "10%", "R$5,35" },
+                        { "98780047", "R$27,99", "9%", "R$25,47" },
 
                 };
                 return produtosPromocaoPrimavera;
@@ -213,8 +236,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 // [3][4]
                 String[][] produtosPromocaoVerão = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
-                        { "Refrigerante de Limão", "R$5,59", "10%", "R$5,03" },
-                        { "Arroz (5kg)", "R$25,98", "11%", "R$23,12" }
+                        { "59021124", "R$5,59", "10%", "R$5,03" },
+                        { "00001608", "R$25,98", "11%", "R$23,12" }
                 };
                 return produtosPromocaoVerão;
         }
@@ -230,9 +253,9 @@ public class Trabalho4BI_CaixaDeMercado {
         return troco;
     }
 
-    public static void pagamento(float totalCompra) {
+    public static float pagamento(float totalCompra) {
         float quantiaCliente;
-        float troco;
+        float troco = 0;
 
         imprimir("Selecione a forma de pagamento. (1 para dinheiro, 2 para cartao, 3 para vale alimentação)");
         int formaPagamento = lerValorInteiro();
@@ -244,7 +267,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 if (quantiaCliente > totalCompra) {
                     troco = calcularTroco(totalCompra, quantiaCliente);
                 }
-                break;
+                return troco;
+                
 
             case 2:
                 imprimir("insira o cartão no leitor");
@@ -279,8 +303,10 @@ public class Trabalho4BI_CaixaDeMercado {
 
             default:
                 imprimir("forma de pagamento invalida");
-                break;
+                break;  
         }
+
+        return troco;
     }
 
     public static void imprimirNotaFiscal(){
@@ -303,9 +329,13 @@ public class Trabalho4BI_CaixaDeMercado {
 
         String[][] produtosPromoçãoSazonal = obterTabelaDescontos(estação);
         
-        String[] passarProdutos();
+        String[][] compraCliente = passarProdutos();
 
-        verificarProdutosDesconto(produtosPromoçãoSazonal);
+        compraCliente = verificarProdutosDesconto(compraCliente, produtosPromoçãoSazonal);
+
+        float total = somaPreçosTotal(compraCliente, produtosPromoçãoSazonal);
+
+        pagamento(total);
 
         imprimir("Imprimir nota fiscal? 0 para nao 1 para sim");
         boolean finalizar = lerBoolean();
