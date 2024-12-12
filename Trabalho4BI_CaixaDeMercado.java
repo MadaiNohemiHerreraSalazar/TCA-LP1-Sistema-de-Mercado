@@ -38,6 +38,8 @@ public class Trabalho4BI_CaixaDeMercado {
 
     public static String[] aumentarVetor(String[] produtosEscolhidos) {
 
+        //metodo que verifica se o vetor encheu, se sim, aumenta o tamanho.
+
         if (produtosEscolhidos[produtosEscolhidos.length - 1] != " ") {
 
             String[] vetorAumentado;
@@ -55,6 +57,8 @@ public class Trabalho4BI_CaixaDeMercado {
     }
 
     public static String[] criarVetorPreenchido(int tamanho, String valorPreenchimento) {
+
+
         String[] vetor;
         vetor = new String[tamanho];
 
@@ -67,6 +71,8 @@ public class Trabalho4BI_CaixaDeMercado {
     }
 
     public static String[] acharProdutoSistema(String[] produtosEscolhidos, String produto) {
+
+        //Verificar se os produtos estâo no sistema
 
     
             for (int i = 0; i < obterTabelaPrecos().length; i++) {
@@ -88,7 +94,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
     public static String[] passarProdutos() {
 
-        // metodo para Scannear codigos e verificar se estão no sistema
+        // metodo para Scannear codigos 
 
         String[] produtosEscolhidos;
         
@@ -98,6 +104,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
         while (true) {
 
+            imprimir("Digite o código do produto.(S para sair)");
             produto = lerTexto();
 
             if (produto == "S") {
@@ -111,11 +118,11 @@ public class Trabalho4BI_CaixaDeMercado {
             
         }
 
-        return null;
+        return produtosEscolhidos;
 
     }
 
-    public static void verificarProdutosDesconto(String[] produtosEscolhidos){
+    public static void verificarProdutosDesconto(String[] produtosEscolhidos, String[][] produtosPromocao){
 
         for (int i = 0; i < produtosEscolhidos.length; i++) {
 
@@ -159,12 +166,17 @@ public class Trabalho4BI_CaixaDeMercado {
         return clientesClube;
     }
 
-    public static String[][] obterTabelaDescontos() {
+    public static int definirEstação(){
         Random random = new Random();
 
         int estaçao = random.nextInt(4);
 
-        switch (estaçao) {
+        return estaçao;
+    }
+
+    public static String[][] obterTabelaDescontos(int estação) {
+
+        switch (estação) {
             case 1:
                 // [4][4]
                 String[][] produtosPromocaoOutono = {
@@ -287,10 +299,13 @@ public class Trabalho4BI_CaixaDeMercado {
 
     public static void main(String[] args) {
        
-        
-        passarProdutos();
+        int estação = definirEstação();
 
-        verificarProdutosDesconto();
+        String[][] produtosPromoçãoSazonal = obterTabelaDescontos(estação);
+        
+        String[] passarProdutos();
+
+        verificarProdutosDesconto(produtosPromoçãoSazonal);
 
         imprimir("Imprimir nota fiscal? 0 para nao 1 para sim");
         boolean finalizar = lerBoolean();
