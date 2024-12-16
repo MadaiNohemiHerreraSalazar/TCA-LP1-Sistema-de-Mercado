@@ -97,7 +97,7 @@ public class Trabalho4BI_CaixaDeMercado {
         int linhas = matrizMae.length;
         int colunas = matrizMae[0].length;
 
-        if (matrizMae[linhas - 1][colunas] != " ") {
+        if (matrizMae[linhas - 1][colunas -1] != " ") {
 
             String[][] matrizAumentada = new String[linhas + 10][colunas];
 
@@ -243,7 +243,6 @@ public class Trabalho4BI_CaixaDeMercado {
 
     public static int definirEstacao() {
 
-        // erro: o 0 também vai ser contado, então estaria contando 5 estações
         Random random = new Random();
 
         int estacao = random.nextInt(3);
@@ -381,7 +380,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
 
         
-    }=new String[3][4];
+    }
 
     public static String[][] agregarEmCarrinho(String[][] carrinho, String[][] produtosPromocaoSazonal,
             String[] produto) {
@@ -455,7 +454,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
             String[][] produtosPromocaoSazonal = new String[3][4];
 
-            int estacao = definirEstação();
+            int estacao = definirEstacao();
             // perguntar se tem clube, só se tem procura a promocao.
 
             acharClienteCadastrado(estacao);
