@@ -415,7 +415,7 @@ public class Trabalho4BI_CaixaDeMercado {
         // for
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {.
 
         int estação = definirEstação();
         // perguntar se tem clube, só se tem procura a promocao.
