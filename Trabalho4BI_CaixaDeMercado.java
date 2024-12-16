@@ -23,6 +23,10 @@ public class Trabalho4BI_CaixaDeMercado {
     public static int TABELA_PROMOCAO_COLUNA_DESCONTO = 2;
     public static int TABELA_PROMOCAO_COLUNA_PRECO_FINAL = 3;
 
+    public static final float quantiaCliente = 0;
+
+    public static int TABELA_CLIENTES_CLUBE_CPF = 1;
+
     public static int lerValorInteiro() {
         int valor = tecladoScanner.nextInt();
         return valor;
@@ -87,42 +91,6 @@ public class Trabalho4BI_CaixaDeMercado {
 
     }
 
-    public static String[][] agregarEmCarrinho(String[][] carrinho, String[][] produtosPromoçãoSazonal,
-            String[] produto) {
-
-        // buscar la posicion del producto en los descuentos e com essa posicion, busco
-        // el desceunto y lo asigno en el carrinho.
-        int posicaoDesconto = procurarValorEmTabela(produtosPromoçãoSazonal, TABELA_PROMOCAO_COLUNA_CODIGO,
-                produto[TABELA_SISTEMA_COLUNA_CODIGO]);
-
-        String precoFinal = produtosPromoçãoSazonal[posicaoDesconto][TABELA_PROMOCAO_COLUNA_PRECO_INICIAL];
-        String desconto = "0";
-
-        if (posicaoDesconto != -1) {
-
-            desconto = produtosPromoçãoSazonal[posicaoDesconto][TABELA_PROMOCAO_COLUNA_DESCONTO];
-
-            precoFinal = produtosPromoçãoSazonal[posicaoDesconto][TABELA_PROMOCAO_COLUNA_PRECO_FINAL];
-        }
-
-        // agregar/adicionar
-
-        for (int i = 1; i < carrinho.length; i++) {
-
-            if (carrinho[i][TABELA_CARRINHO_COLUNA_NOME] == " ") {
-                carrinho[i][TABELA_CARRINHO_COLUNA_NOME] = produto[TABELA_SISTEMA_COLUNA_NOME];
-                carrinho[i][TABELA_CARRINHO_COLUNA_CODIGO] = produto[TABELA_SISTEMA_COLUNA_CODIGO];
-                carrinho[i][TABELA_CARRINHO_COLUNA_PRECO] = produto[TABELA_SISTEMA_COLUNA_PRECO];
-                carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] = desconto;
-                carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL] = precoFinal;
-                break;
-            }
-        }
-
-        return carrinho;
-
-    }
-
     public static String[][] aumentarVetor(String[][] matrizMae) {
         // metodo que verifica se o vetor encheu, se sim, aumenta o tamanho.
 
@@ -147,7 +115,7 @@ public class Trabalho4BI_CaixaDeMercado {
         return matrizMae;
     }
 
-    public static String[][] acharProdutoSistema(String[][] produtosEscolhidos, String produto,
+    public static String[][] acharProdutoSistema(String[][] carrinho, String produto,
             String[][] produtosPromoçãoSazonal) {
 
         // Verificar se os produtos estão no sistema, limpando assim o carrinho de
@@ -161,18 +129,18 @@ public class Trabalho4BI_CaixaDeMercado {
         if (posicaoProduto == -1) {
 
             System.out.println("Produto não achado. Tente novamente");
-            return produtosEscolhidos;
+            return carrinho;
 
         }
         // busco si ya he colocado ese producto anteriormente, si si, lo sumo, si no, lo
         // agrego.
 
-        int posicaoProdutoCarrinho = procurarValorEmTabela(produtosEscolhidos, TABELA_CARRINHO_COLUNA_CODIGO, produto);
+        int posicaoProdutoCarrinho = procurarValorEmTabela(carrinho, TABELA_CARRINHO_COLUNA_CODIGO, produto);
 
         // si no lo consiguio, agrego uno nuevo:
         if (posicaoProdutoCarrinho == -1) {
 
-            produtosEscolhidos = agregarEmCarrinho(produtosEscolhidos, produtosPromoçãoSazonal,
+            carrinho = agregarEmCarrinho(carrinho, produtosPromoçãoSazonal,
                     tabelaPrecos[posicaoProduto]);
 
         } else {
@@ -180,24 +148,23 @@ public class Trabalho4BI_CaixaDeMercado {
             // si lo consiguio, sumo.
 
             int qntProdutos = Integer
-                    .parseInt(produtosEscolhidos[posicaoProdutoCarrinho][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
+                    .parseInt(carrinho[posicaoProdutoCarrinho][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
             qntProdutos++;
 
-            produtosEscolhidos[posicaoProdutoCarrinho][TABELA_CARRINHO_COLUNA_QNTPRODUTOS] = Integer
+            carrinho[posicaoProdutoCarrinho][TABELA_CARRINHO_COLUNA_QNTPRODUTOS] = Integer
                     .toString(qntProdutos);
 
         }
 
-        return produtosEscolhidos;
+        return carrinho;
 
     }
 
     public static String[][] passarProdutos(String[][] produtosPromoçãoSazonal) {
 
         // metodo para Scannear codigos
-        // coluna para o nome e coluna para o desconto (coluna para a qnt??)
 
-        String[][] produtosEscolhidos = criarMatrizPreenchida(10, 4, " ");
+        String[][] carrinho = criarMatrizPreenchida(10, 6, " ");
 
         String produto;
 
@@ -210,37 +177,29 @@ public class Trabalho4BI_CaixaDeMercado {
                 break;
             }
 
-            produtosEscolhidos = aumentarVetor(produtosEscolhidos);
+            carrinho = aumentarVetor(carrinho);
 
-            produtosEscolhidos = acharProdutoSistema(produtosEscolhidos, produto, produtosPromoçãoSazonal);
+            carrinho = acharProdutoSistema(carrinho, produto, produtosPromoçãoSazonal);
 
         }
 
-        return produtosEscolhidos;
+        return carrinho;
 
     }
 
-    public static String[][] verificarProdutosDesconto(String[][] produtosEscolhidos, String[][] produtosPromocao) {
-
-        for (int i = 0; i < produtosEscolhidos.length; i++) {
-
-            for (int j = 0; j < produtosEscolhidos.length; j++) {
-                if (produtosEscolhidos[i][j] == produtosPromocao[j][3]) {
-                    produtosEscolhidos[i][j] = produtosPromocao[j][3];
-                }
-            }
-        }
-
-        return produtosEscolhidos;
-    }
-
-    public static float somaPreçoTotal(String[][] produtosEscolhidos, String[][] produtosCompraPromocao) {
+    public static float somaPreçoTotal(String[][] carrinho) {
 
         float somaPrecoTotal = 0;
 
-        for (int i = 0; i < produtosEscolhidos.length; i++) {
+        for (int i = 0; i < carrinho.length; i++) {
 
-            somaPrecoTotal = somaPrecoTotal + Float.parseFloat(produtosEscolhidos[i][1]);
+            if (carrinho[i][TABELA_CARRINHO_COLUNA_PRECO] == carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]) {
+                somaPrecoTotal = somaPrecoTotal + Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO]);
+            } else {
+                somaPrecoTotal = somaPrecoTotal + Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]);
+
+            }
+
         }
 
         return somaPrecoTotal;
@@ -265,7 +224,7 @@ public class Trabalho4BI_CaixaDeMercado {
         return precosProdutos;
     }
 
-    public static String[][] criarTabelaClienteClube() {
+    public static String[][] obterTabelaClienteClube() {
 
         // reducir numero de clientes
 
@@ -282,20 +241,20 @@ public class Trabalho4BI_CaixaDeMercado {
         return clientesClube;
     }
 
-    public static int definirEstação() {
+    public static int definirEstacao() {
 
         // erro: o 0 também vai ser contado, então estaria contando 5 estações
         Random random = new Random();
 
-        int estaçao = random.nextInt(4);
+        int estacao = random.nextInt(3);
 
-        return estaçao;
+        return estacao;
     }
 
     public static String[][] obterTabelaDescontos(int estação) {
 
         switch (estação) {
-            case 1:
+            case 0:
                 // [3][4]
                 String[][] produtosPromocaoOutono = {
 
@@ -306,7 +265,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
                 return produtosPromocaoOutono;
 
-            case 2:
+            case 1:
                 // [3][4]
                 String[][] produtosPromocaoinverno = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
@@ -316,7 +275,7 @@ public class Trabalho4BI_CaixaDeMercado {
                 };
                 return produtosPromocaoinverno;
 
-            case 3:
+            case 2:
                 // [3][4]
                 String[][] produtosPromocaoPrimavera = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
@@ -326,7 +285,7 @@ public class Trabalho4BI_CaixaDeMercado {
                 };
                 return produtosPromocaoPrimavera;
 
-            case 4:
+            case 3:
                 // [3][4]
                 String[][] produtosPromocaoVerão = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
@@ -348,93 +307,176 @@ public class Trabalho4BI_CaixaDeMercado {
     }
 
     public static float pagamento(float totalCompra) {
-        float quantiaCliente;
-        float troco = 0;
+        float troco = -1;
 
-        imprimir("Selecione a forma de pagamento. (1 para dinheiro, 2 para cartao, 3 para vale alimentação)");
-        int formaPagamento = lerValorInteiro();
+        imprimir("Informe quantia dada pelo cliente");
+        float quantiaCliente = lerValorReal();
 
-        switch (formaPagamento) {
-            case 1:
-                imprimir("Informe quantia dada pelo cliente");
-                quantiaCliente = lerValorReal();
-                if (quantiaCliente > totalCompra) {
-                    troco = calcularTroco(totalCompra, quantiaCliente);
-                }
-                return troco;
-
-            case 2:
-                imprimir("insira o cartão no leitor");
-                imprimir("selecione 1 para credito e 2 para debito");
-                int metodoCartao = lerValorInteiro();
-
-                switch (metodoCartao) {
-                    case 1:
-                        float leitorMaquinaCreditoLimite = lerValorReal();
-                        if (leitorMaquinaCreditoLimite >= totalCompra) {
-                            imprimir("TRANSAÇÃO APROVADA");
-                            break;
-                        } else {
-                            imprimir("TRANSAÇÃO RECUSADA");
-                            break;
-                        }
-
-                    case 2:
-                        float leitorMaquinaDebitoSaldo = lerValorReal();
-                        if (leitorMaquinaDebitoSaldo >= totalCompra) {
-                            imprimir("TRANSAÇÃO APROVADA");
-
-                            break;
-                        } else {
-                            imprimir("TRANSAÇÃO RECUSADA");
-                            break;
-                        }
-                }
-                break;
-
-            case 3:
-
-            default:
-                imprimir("forma de pagamento invalida");
-                break;
+        if (quantiaCliente > totalCompra) {
+            troco = calcularTroco(totalCompra, quantiaCliente);
+            return troco;
+        } else if (quantiaCliente == totalCompra) {
+            troco = 0;
+            return troco;
+        } else {
+            imprimir("quantia insuficiente");
         }
 
         return troco;
     }
 
-    public static void imprimirNotaFiscal() {
+    public static void imprimirNotaFiscal(String[][] carrinho, int somaPrecoTotal, int troco, int quantiaCliente) {
+
+        float vlTotal = 0;
 
         // impresão da nota fiscal
 
-        System.out.print("________________________________\n" +
-                "|    M3 Comercio de Alimentos    |\n" +
-                "|      Centro, Cascavel Pr       |\n" +
-                "|________________________________|\n" +
-                "|--------------------------------|\n");
+        System.out.print("__________________________________________\n" +
+                "|       M² Comercio de Alimentos           |\n" +
+                "|          Centro, Cascavel Pr             |\n" +
+                "|__________________________________________|\n" +
+                "|------------------------------------------|\n" +
+                "|Codigo   Descrição   Qnt Vl.Unit Vl.Total |\n" +
+                "|                                          |\n");
 
-        // for
-    }
+        for (int i = 0; i < carrinho.length; i++) {
 
-    public static void main(String[] args) {.
+            vlTotal = Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO])
+                    * Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
 
-        int estação = definirEstação();
-        // perguntar se tem clube, só se tem procura a promocao.
-        String[][] produtosPromoçãoSazonal = obterTabelaDescontos(estação);
+            System.out.printf("|s%  s%  s%  s%  f.2%|", carrinho[i][TABELA_CARRINHO_COLUNA_CODIGO],
+                    carrinho[i][TABELA_CARRINHO_COLUNA_NOME], carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS],
+                    carrinho[i][TABELA_CARRINHO_COLUNA_PRECO], vlTotal);
 
-        String[][] compraCliente = passarProdutos(produtosPromoçãoSazonal);
-
-        compraCliente = verificarProdutosDesconto(compraCliente, produtosPromoçãoSazonal);
-
-        float total = somaPreçosTotal(compraCliente, produtosPromoçãoSazonal);
-
-        pagamento(total);
-
-        imprimir("Imprimir nota fiscal? 0 para nao 1 para sim");
-        boolean finalizar = lerBoolean();
-        if (finalizar == true) {
-            imprimirNotaFiscal();
         }
 
-        imprimir("OPERAÇÃO FINALIZADA");
+        System.out.printf("|------------------------------------------|\n" +
+                "|Produtos Promocao  Desconto  Preço Final  |");
+
+        for (int i = 0; i < carrinho.length; i++) {
+
+            if (carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] != "0") {
+
+                System.out.printf("|s%  s%  s%|", carrinho[i][TABELA_CARRINHO_COLUNA_NOME],
+                        carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO], carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]);
+
+            }
+
+        }
+
+
+        System.out.printf("|------------------------------------------|\n" +
+                          "|SUBTOTAL                             f.2% |\n", somaPrecoTotal +
+                          "|------------------------------------------|\n" +
+                          "|Total de Items                         d% |\n", carrinho.length +
+                          "|Valor Total R$                       f.2% |\n", somaPrecoTotal +
+                          "|Forma de Pagamento              Valor Pago|\n" +
+                          "|Dinheiro                             f.2% |\n", quantiaCliente +
+                          "|Troco                                f.2% |\n" +
+                          "|__________________________________________|\n" +
+                          "|     OBRIDADO POR ESCOLHER MERCADOS M²    |\n" +
+                          "|              VOLTE SEMPRE!!              |\n" +
+                          "|__________________________________________|"
+                          );
+
+
+        
+    }=new String[3][4];
+
+    public static String[][] agregarEmCarrinho(String[][] carrinho, String[][] produtosPromocaoSazonal,
+            String[] produto) {
+
+        // buscar la posicion del producto en los descuentos e com essa posicion, busco
+        // el desceunto y lo asigno en el carrinho.
+        int posicaoDesconto = procurarValorEmTabela(produtosPromocaoSazonal, TABELA_PROMOCAO_COLUNA_CODIGO,
+                produto[TABELA_SISTEMA_COLUNA_CODIGO]);
+
+        String precoFinal = produtosPromocaoSazonal[posicaoDesconto][TABELA_PROMOCAO_COLUNA_PRECO_INICIAL];
+        String desconto = "0";
+
+        if (posicaoDesconto != -1) {
+
+            desconto = produtosPromocaoSazonal[posicaoDesconto][TABELA_PROMOCAO_COLUNA_DESCONTO];
+
+            precoFinal = produtosPromocaoSazonal[posicaoDesconto][TABELA_PROMOCAO_COLUNA_PRECO_FINAL];
+        }
+
+        // agregar/adicionar
+
+        for (int i = 1; i < carrinho.length; i++) {
+
+            if (carrinho[i][TABELA_CARRINHO_COLUNA_NOME] == " ") {
+                carrinho[i][TABELA_CARRINHO_COLUNA_NOME] = produto[TABELA_SISTEMA_COLUNA_NOME];
+                carrinho[i][TABELA_CARRINHO_COLUNA_CODIGO] = produto[TABELA_SISTEMA_COLUNA_CODIGO];
+                carrinho[i][TABELA_CARRINHO_COLUNA_PRECO] = produto[TABELA_SISTEMA_COLUNA_PRECO];
+                carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] = desconto;
+                carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL] = precoFinal;
+                break;
+            }
+        }
+
+        return carrinho;
+
     }
+
+    public static String[][] acharClienteCadastrado(int estacao){
+        String[][] tabelaClientes = obterTabelaClienteClube();
+
+        imprimir("O cliente possui cadastro no clubeM²?(true para sim ou false para não)");
+        boolean entrada = lerBoolean();
+
+        if (entrada == true) {
+            String[][] produtosPromocaoSazonal = new String[3][4];
+
+            String cpfCliente = lerTexto();
+
+            for (int i = 0; i < tabelaClientes.length; i++) {
+
+                if (cpfCliente == tabelaClientes[i][TABELA_CLIENTES_CLUBE_CPF]) {
+
+                    produtosPromocaoSazonal = obterTabelaDescontos(estacao);
+
+                }
+
+            }
+
+            return produtosPromocaoSazonal;
+        }
+
+        return null;
+    }
+
+    public static void main(String[] args) {
+
+        imprimir("DIGITE 1 PARA INICIAR OPERAÇÃO.");
+        int iniciarOperacao = lerValorInteiro();
+
+        if (iniciarOperacao == 1) {
+
+            String[][] produtosPromocaoSazonal = new String[3][4];
+
+            int estacao = definirEstação();
+            // perguntar se tem clube, só se tem procura a promocao.
+
+            acharClienteCadastrado(estacao);
+
+            String[][] carrinho = passarProdutos(produtosPromocaoSazonal);
+
+            float total = somaPreçoTotal(carrinho);
+
+            float troco = pagamento(total);
+
+            imprimir("TROCO: " + troco);
+
+            imprimir("Imprimir nota fiscal?(true para sim ou false para não)");
+            boolean finalizar = lerBoolean();
+
+            if (finalizar == true) {
+                //imprimirNotaFiscal(carrinho, total, troco quantiaCliente);
+            }
+
+            imprimir("OPERAÇÃO FINALIZADA");
+        }
+    }
+
 }
