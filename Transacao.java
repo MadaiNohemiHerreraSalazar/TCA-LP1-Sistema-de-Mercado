@@ -1,6 +1,6 @@
 public class Transacao {
     
-    public float quantia;
+    public float quantiaDada;
     public float troco;
     
 }
