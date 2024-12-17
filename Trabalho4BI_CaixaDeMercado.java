@@ -415,7 +415,7 @@ public class Trabalho4BI_CaixaDeMercado {
             vlTotal = Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO])
                     * Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
 
-            System.out.printf("|s%  s%  s%  s%  f.2%|", carrinho[i][TABELA_CARRINHO_COLUNA_CODIGO],
+            System.out.printf("|s%        s%        s%        s%        f.2%|", carrinho[i][TABELA_CARRINHO_COLUNA_CODIGO],
                     carrinho[i][TABELA_CARRINHO_COLUNA_NOME], carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS],
                     carrinho[i][TABELA_CARRINHO_COLUNA_PRECO], vlTotal);
 
@@ -428,7 +428,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
             if (carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] != "0") {
 
-                System.out.printf("|s%  s%  s%|", carrinho[i][TABELA_CARRINHO_COLUNA_NOME],
+                System.out.printf("|s%                     s%                s%      |", carrinho[i][TABELA_CARRINHO_COLUNA_NOME],
                         carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO], carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]);
 
             }
