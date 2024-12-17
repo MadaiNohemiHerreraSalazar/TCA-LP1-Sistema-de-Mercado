@@ -227,6 +227,7 @@ public class Trabalho4BI_CaixaDeMercado {
                     System.out.println(tabelaClientes[i][TABELA_SISTEMA_COLUNA_NOME]);
 
                     produtosPromocaoSazonal = obterTabelaDescontos(estacao);
+                    break;
 
                 }
 
@@ -465,7 +466,7 @@ public class Trabalho4BI_CaixaDeMercado {
             int estacao = definirEstacao();
             // perguntar se tem clube, só se tem procura a promocao.
 
-            acharClienteCadastrado(estacao);
+            produtosPromocaoSazonal = acharClienteCadastrado(estacao);
 
             String[][] carrinho = passarProdutos(produtosPromocaoSazonal);
 
