@@ -28,6 +28,10 @@ public class Trabalho4BI_CaixaDeMercado {
 
     public static int TABELA_CLIENTES_CLUBE_CPF = 1;
 
+    public static void pularLinha(){
+        System.out.println();
+    }
+
     public static int lerValorInteiro() {
         int valor = tecladoScanner.nextInt();
         return valor;
@@ -150,7 +154,9 @@ public class Trabalho4BI_CaixaDeMercado {
                 { "João Pedro Oliveira", "98765432100" },
                 { "Cláudia Costa Ferreira", "45612378932" },
                 { "Carlos Eduardo Almeida", "32165498745" },
-                { "Sofia Ribeiro Santos", "78912345687" }
+                { "Sofia Ribeiro Santos", "78912345687" },
+                {"Mestre Oda", "11111111111"},
+                {"Lozão", "22222222222"}
         };
 
         return clientesClube;
@@ -216,35 +222,63 @@ public class Trabalho4BI_CaixaDeMercado {
         String[][] produtosPromocaoSazonal = new String[3][4];
         String[][] tabelaClientes = obterTabelaClienteClube();
 
-        imprimir("O cliente possui cadastro no clubeM²?(true para sim ou false para não)");
-        boolean entrada = lerBoolean();
+        while (true) {
+            pularLinha();
+            imprimir("O cliente possui cadastro no clubeM²?(S para sim ou N para não)");
+            String entrada = lerTexto();
 
-        if (entrada == true) {
-            
-            imprimir("Informe o CPF do cliente");
-            String cpfCliente = lerTexto();
+            if (entrada.equalsIgnoreCase("S") ) {
+                pularLinha();
+                imprimir("Informe o CPF do cliente");
+                String cpfCliente = lerTexto();
 
-            for (int i = 1; i < tabelaClientes.length; i++) {
+                for (int i = 1; i < tabelaClientes.length; i++) {
 
-                if (cpfCliente.equals (tabelaClientes[i][TABELA_CLIENTES_CLUBE_CPF])) {
+                    if (cpfCliente.equals (tabelaClientes[i][TABELA_CLIENTES_CLUBE_CPF])) {
 
-                    imprimir("Cliente encontrado");
-                    System.out.println(tabelaClientes[i][TABELA_SISTEMA_COLUNA_NOME]);
+                        imprimir("Cliente encontrado");
+                        imprimir(tabelaClientes[i][TABELA_SISTEMA_COLUNA_NOME]);
+                        pularLinha();
 
-                   
-                    produtosPromocaoSazonal = obterTabelaDescontos(estacao);
-                    break;
+                    
+                        produtosPromocaoSazonal = obterTabelaDescontos(estacao);
+                        return produtosPromocaoSazonal;
 
-                }else{
-                    imprimir("-");
+                    }else if (i == tabelaClientes.length-1 ){
+                        pularLinha();
+                        imprimir("Cliente não encontrado");
+                        imprimir("Deseja tentar novamente?(S para Sim N para Nao)");
+                        String finalizar = lerTexto();
+
+                        while (true) {
+                            if (finalizar.equalsIgnoreCase("S")) {
+
+                                break;
+                            }else if (finalizar.equalsIgnoreCase("N")) {
+                                return produtosPromocaoSazonal;
+                            }else{
+                                pularLinha();
+                                imprimir("entrada inválida");
+                                imprimir("tente novamente");
+                            } 
+                        }
+                       
+                    }
                 }
+
+            }else if (entrada.equalsIgnoreCase("N")) {
+                return produtosPromocaoSazonal;
+            }else{
+                imprimir("entrada inválida");
+                imprimir("tente novamente");
             }
         }
+        
 
-        return produtosPromocaoSazonal;
+        
     }
 
-    public static String[][] agregarEmCarrinho(String[][] carrinho, String[][] produtosPromocaoSazonal,
+    public static String[][] agregarPromocaoEmCarrinho(String[][] carrinho, String[][] produtosPromocaoSazonal,
             String[] produto) {
 
         /*Procura a posição do produto na tabela de descontos e com essa posição, procura o valor do 
@@ -298,7 +332,8 @@ public class Trabalho4BI_CaixaDeMercado {
 
         if (posicaoProduto == -1) {
 
-            System.out.println("Produto não achado. Tente novamente");
+            pularLinha();
+            imprimir("Produto não encontrado. Tente novamente");
             return carrinho;
 
         }
@@ -310,7 +345,7 @@ public class Trabalho4BI_CaixaDeMercado {
         // se não achar, adiciona um novo:
         if (posicaoProdutoCarrinho == -1) {
 
-            carrinho = agregarEmCarrinho(carrinho, produtosPromoçãoSazonal,
+            carrinho = agregarPromocaoEmCarrinho(carrinho, produtosPromoçãoSazonal,
                     tabelaPrecos[posicaoProduto]);
 
         } else {
@@ -318,8 +353,7 @@ public class Trabalho4BI_CaixaDeMercado {
             // se conseguir, irá soma-lo.
 
             //trasnforma para int e soma
-            int qntProdutos = Integer
-                    .parseInt(carrinho[posicaoProdutoCarrinho][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
+            int qntProdutos = Integer.parseInt(carrinho[posicaoProdutoCarrinho][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
             qntProdutos++;
 
             //transforma novamente para string
@@ -339,13 +373,15 @@ public class Trabalho4BI_CaixaDeMercado {
         String[][] carrinho = criarMatrizPreenchida(10, 6, " ");
 
         String produto;
+        imprimir("SCANNER");
 
         while (true) {
-
+            
             imprimir("Digite o código do produto.(S para sair)");
             produto = lerTexto();
+            pularLinha();
 
-            if (produto.equals("S")) {
+            if (produto.equalsIgnoreCase("S")) {
                 return carrinho;
             }
 
@@ -366,12 +402,12 @@ public class Trabalho4BI_CaixaDeMercado {
 
         for (int i = 1; i < carrinho.length; i++) {
 
-            if (carrinho[i][2] != null && !carrinho[i][2].trim().isEmpty()) {
+            if (carrinho[i][2] != null && !carrinho[i][TABELA_CARRINHO_COLUNA_PRECO].trim().isEmpty()) {
                  if (carrinho[i][3].equals("0")) {
-                    somaPrecoTotal = somaPrecoTotal + Float.parseFloat(carrinho[i][2]);
+                    somaPrecoTotal = somaPrecoTotal + Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO]);
                     
                  }else{
-                     somaPrecoTotal = somaPrecoTotal + Float.parseFloat(carrinho[i][4]);
+                     somaPrecoTotal = somaPrecoTotal + Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]);
                  }
             }
         }
@@ -396,6 +432,7 @@ public class Trabalho4BI_CaixaDeMercado {
                 cliente.troco = cliente.quantiaDada - totalCompra;
                 break;
             } else {
+                pularLinha();
                 imprimir("PAGAMENTO INSUFICIENTE");
                 imprimir("Tente um novo valor");
             } 
@@ -416,7 +453,15 @@ public class Trabalho4BI_CaixaDeMercado {
 
     public static void imprimirNotaFiscal(String[][] carrinho, float somaPrecoTotal, float troco, float quantiaCliente) {
 
-        float vlTotal = 0;
+        //loop para aceitar somente caracteres válidos
+            while (true) {
+                pularLinha();
+                imprimir("Imprimir nota fiscal?(S para sim ou N para não)");
+                String finalizar = lerTexto();
+
+                if (finalizar.equalsIgnoreCase("S")) {
+                    
+                    float vlTotal = 0;
 
         // impresão da nota fiscal
 
@@ -473,7 +518,19 @@ public class Trabalho4BI_CaixaDeMercado {
                         "|              VOLTE SEMPRE!!              |\n" +
                         "|__________________________________________|");
 
+
+                }else if (finalizar.equalsIgnoreCase("N")) {
+                    break;
+                }else{
+                    imprimir("entrada inválida");
+                    imprimir("tente novamente");
+                } 
+            }
+
+        
     }
+
+    
 
     public static void main(String[] args) {
         
@@ -486,30 +543,27 @@ public class Trabalho4BI_CaixaDeMercado {
             String[][] produtosPromocaoSazonal = new String[3][4];
 
             int estacao = definirEstacao();
-            // perguntar se tem clube, só se tem procura a promocao.
-
-            System.out.println(estacao);
 
             produtosPromocaoSazonal = acharClienteCadastrado(estacao);
+
 
             String[][] carrinho = passarProdutos(produtosPromocaoSazonal);
 
             float total = somaPreçoTotal(carrinho);
-
+            pularLinha();
             System.out.printf("Valor total da compra: R$%.2f %n", total);
 
-            Transacao cliente = pagamento(total);
 
+            Transacao cliente = pagamento(total);
+            pularLinha();
             System.out.printf("TROCO: R$%.2f %n", cliente.troco);
 
-            imprimir("Imprimir nota fiscal?(true para sim ou false para não)");
-            boolean finalizar = lerBoolean();
+            imprimirNotaFiscal(carrinho, total, cliente.troco, cliente.quantiaDada);
 
-            if (finalizar == true) {
-                imprimirNotaFiscal(carrinho, total, cliente.troco, cliente.quantiaDada);
-            }
-
+            
             imprimir("OPERAÇÃO FINALIZADA");
+        }else{
+            imprimir("TENHA UM BOM DIA!");
         }
     }
 
