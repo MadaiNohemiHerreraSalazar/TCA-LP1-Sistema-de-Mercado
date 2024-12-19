@@ -546,6 +546,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 System.out.printf("|              VOLTE SEMPRE!!              |\n");
                 System.out.printf("|__________________________________________|");
 
+                break;
+
             } else if (finalizar.equalsIgnoreCase("N")) {
                 break;
             } else {
