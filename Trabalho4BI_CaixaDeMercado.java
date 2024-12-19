@@ -34,11 +34,6 @@ public class Trabalho4BI_CaixaDeMercado {
         return valor;
     }
 
-    public static boolean lerBoolean() {
-        boolean valor = tecladoScanner.nextBoolean();
-        return valor;
-    }
-
     public static float lerValorReal() {
         float valor = tecladoScanner.nextFloat();
         return valor;
@@ -51,13 +46,6 @@ public class Trabalho4BI_CaixaDeMercado {
 
     public static void imprimir(String mensagem) {
         System.out.println(mensagem);
-    }
-
-    public static void imprimirVetorString(int[] vetor) {
-
-        for (int i = /*  */ 0; i < vetor.length; i++) {
-            System.out.printf("[%d]:  %d\n", i, vetor[i]);
-        }
     }
 
     public static String[][] criarMatrizPreenchida(int linhas, int colunas, String valorPreenchimento) {
@@ -103,7 +91,7 @@ public class Trabalho4BI_CaixaDeMercado {
         int linhas = matrizOriginal.length;
         int colunas = matrizOriginal[0].length;
 
-        if (matrizOriginal[linhas - 1][colunas - 1] != " ") {
+        if (!matrizOriginal[linhas - 1][colunas - 1].equals (" ")) {
 
             String[][] matrizAumentada = new String[linhas + 10][colunas];
 
@@ -153,7 +141,7 @@ public class Trabalho4BI_CaixaDeMercado {
                 { "Carlos Eduardo Almeida", "32165498745" },
                 { "Sofia Ribeiro Santos", "78912345687" },
                 { "Mestre Oda", "11111111111" },
-                { "Lozão", "22222222222" }
+                { "Lozão ;D", "22222222222" }
         };
 
         return clientesClube;
@@ -233,8 +221,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
                     if (cpfCliente.equals(tabelaClientes[i][TABELA_CLIENTES_CLUBE_CPF])) {
 
-                        imprimir("Cliente encontrado");
-                        imprimir(tabelaClientes[i][TABELA_SISTEMA_COLUNA_NOME]);
+                        imprimir("Cliente encontrado: " + tabelaClientes[i][TABELA_SISTEMA_COLUNA_NOME]);
                         pularLinha();
 
                         produtosPromocaoSazonal = obterTabelaDescontos(estacao);
@@ -375,6 +362,8 @@ public class Trabalho4BI_CaixaDeMercado {
         String[][] carrinho = criarMatrizPreenchida(10, 6, " ");
 
         String produto;
+
+        pularLinha();
         imprimir("SCANNER");
 
         while (true) {
@@ -404,6 +393,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
             if (!carrinho[i][TABELA_CARRINHO_COLUNA_PRECO].trim().isEmpty()) {
                 if (carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO].equals("0")) {
+
                     somaPrecoTotal += Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO])
                             * Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
 
@@ -521,7 +511,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
                             if (carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] != "0") {
 
-                                System.out.printf("|%s             %-8.1f%%  R$%-2.2f      |\n",
+                                System.out.printf("|%s                     %.1f%%    R$%.2f      |\n",
                                         carrinho[i][TABELA_CARRINHO_COLUNA_NOME],
                                         Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO]),
                                         Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]));
@@ -544,7 +534,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 System.out.printf("|__________________________________________|\n");
                 System.out.printf("|     OBRIDADO POR ESCOLHER MERCADOS M²    |\n");
                 System.out.printf("|              VOLTE SEMPRE!!              |\n");
-                System.out.printf("|__________________________________________|");
+                System.out.printf("|__________________________________________|\n");
+                pularLinha();
 
                 break;
 
@@ -558,7 +549,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
     }
 
-    // Método para simular la lectura de texto (en lugar de lerTexto)
+    
 
     public static void main(String[] args) {
 
@@ -585,7 +576,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
             imprimirNotaFiscal(carrinho, total, cliente.troco, cliente.quantiaDada);
 
-            imprimir("OPERAÇÃO FINALIZADA");
+            imprimir("OPERAÇÃO FINALIZADA.");
         } else {
             imprimir("TENHA UM BOM DIA!");
         }
