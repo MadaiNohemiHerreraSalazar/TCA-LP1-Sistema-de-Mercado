@@ -582,4 +582,6 @@ public class Trabalho4BI_CaixaDeMercado {
         }
     }
 
+    //Madai : Obrigado profesores por tudo, realmente aprecio seu esforço e paciência! Aprendi más do que alguma vez sonhei. Feliz Natal e Ano Novo!
+
 }
