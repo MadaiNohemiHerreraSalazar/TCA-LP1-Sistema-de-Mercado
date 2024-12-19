@@ -1,7 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
 
-
 public class Trabalho4BI_CaixaDeMercado {
 
     public static Scanner tecladoScanner = new Scanner(System.in);
@@ -24,11 +23,9 @@ public class Trabalho4BI_CaixaDeMercado {
     public static int TABELA_PROMOCAO_COLUNA_DESCONTO = 2;
     public static int TABELA_PROMOCAO_COLUNA_PRECO_FINAL = 3;
 
-    
-
     public static int TABELA_CLIENTES_CLUBE_CPF = 1;
 
-    public static void pularLinha(){
+    public static void pularLinha() {
         System.out.println();
     }
 
@@ -78,7 +75,7 @@ public class Trabalho4BI_CaixaDeMercado {
     }
 
     public static int obterPosicaoValorEmTabela(String[][] tabela, int coluna, String dado) {
-    //Procura o valor na tabela e retorna a posição
+        // Procura o valor na tabela e retorna a posição
         if (tabela == null) {
             return -1;
         }
@@ -87,7 +84,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
         for (int i = 1; i < tabela.length; i++) {
 
-            if (dado.equals (tabela[i][coluna])) {
+            if (dado.equals(tabela[i][coluna])) {
 
                 posicao = i;
                 break;
@@ -155,8 +152,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 { "Cláudia Costa Ferreira", "45612378932" },
                 { "Carlos Eduardo Almeida", "32165498745" },
                 { "Sofia Ribeiro Santos", "78912345687" },
-                {"Mestre Oda", "11111111111"},
-                {"Lozão", "22222222222"}
+                { "Mestre Oda", "11111111111" },
+                { "Lozão", "22222222222" }
         };
 
         return clientesClube;
@@ -166,7 +163,7 @@ public class Trabalho4BI_CaixaDeMercado {
 
         Random random = new Random();
 
-        int estacao = random.nextInt(4);
+        int estacao = random.nextInt(3);
 
         return estacao;
     }
@@ -179,8 +176,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 String[][] produtosPromocaoOutono = {
 
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
-                        { "11112034", "R$8,99", "8%", "8.27" },
-                        { "00112013", "R$6,68", "9%", "6.08" },
+                        { "11112034", "R$8,99", "8", "8.27" },
+                        { "00112013", "R$6,68", "9", "6.08" },
                 };
 
                 return produtosPromocaoOutono;
@@ -189,8 +186,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 // [3][4]
                 String[][] produtosPromocaoinverno = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
-                        { "70083254", "R$3,19", "7%", "2.97" },
-                        { "70081529", "R$4,69", "5%", "4.46" },
+                        { "70083254", "R$3,19", "7", "2.97" },
+                        { "70081529", "R$4,69", "5", "4.46" },
 
                 };
                 return produtosPromocaoinverno;
@@ -199,8 +196,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 // [3][4]
                 String[][] produtosPromocaoPrimavera = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
-                        { "89001698", "R$5,94", "10%", "5.35" },
-                        { "98780047", "R$27,99", "9%", "25.47" },
+                        { "89001698", "R$5,94", "10", "5.35" },
+                        { "98780047", "R$27,99", "9", "25.47" },
 
                 };
                 return produtosPromocaoPrimavera;
@@ -209,8 +206,8 @@ public class Trabalho4BI_CaixaDeMercado {
                 // [3][4]
                 String[][] produtosPromocaoVerão = {
                         { "Produto", "Preço Original", "Desconto", "Preço com Desconto" },
-                        { "59021124", "R$5,59", "10%", "5.03" },
-                        { "00001608", "R$25,98", "11%", "23.12" }
+                        { "59021124", "R$5,59", "10", "5.03" },
+                        { "00001608", "R$25,98", "11", "23.12" }
                 };
                 return produtosPromocaoVerão;
         }
@@ -227,24 +224,23 @@ public class Trabalho4BI_CaixaDeMercado {
             imprimir("O cliente possui cadastro no clubeM²?(S para sim ou N para não)");
             String entrada = lerTexto();
 
-            if (entrada.equalsIgnoreCase("S") ) {
+            if (entrada.equalsIgnoreCase("S")) {
                 pularLinha();
                 imprimir("Informe o CPF do cliente");
                 String cpfCliente = lerTexto();
 
                 for (int i = 1; i < tabelaClientes.length; i++) {
 
-                    if (cpfCliente.equals (tabelaClientes[i][TABELA_CLIENTES_CLUBE_CPF])) {
+                    if (cpfCliente.equals(tabelaClientes[i][TABELA_CLIENTES_CLUBE_CPF])) {
 
                         imprimir("Cliente encontrado");
                         imprimir(tabelaClientes[i][TABELA_SISTEMA_COLUNA_NOME]);
                         pularLinha();
 
-                    
                         produtosPromocaoSazonal = obterTabelaDescontos(estacao);
                         return produtosPromocaoSazonal;
 
-                    }else if (i == tabelaClientes.length-1 ){
+                    } else if (i == tabelaClientes.length - 1) {
                         pularLinha();
                         imprimir("Cliente não encontrado");
                         imprimir("Deseja tentar novamente?(S para Sim N para Nao)");
@@ -254,50 +250,50 @@ public class Trabalho4BI_CaixaDeMercado {
                             if (finalizar.equalsIgnoreCase("S")) {
 
                                 break;
-                            }else if (finalizar.equalsIgnoreCase("N")) {
+                            } else if (finalizar.equalsIgnoreCase("N")) {
                                 return produtosPromocaoSazonal;
-                            }else{
+                            } else {
                                 pularLinha();
                                 imprimir("entrada inválida");
                                 imprimir("tente novamente");
-                            } 
+                            }
                         }
-                       
+
                     }
                 }
 
-            }else if (entrada.equalsIgnoreCase("N")) {
+            } else if (entrada.equalsIgnoreCase("N")) {
                 return produtosPromocaoSazonal;
-            }else{
+            } else {
                 imprimir("entrada inválida");
                 imprimir("tente novamente");
             }
         }
-        
 
-        
     }
 
     public static String[][] agregarPromocaoEmCarrinho(String[][] carrinho, String[][] produtosPromocaoSazonal,
             String[] produto) {
 
-        /*Procura a posição do produto na tabela de descontos e com essa posição, procura o valor do 
-        desconto e adiciona no carrinho.*/
+        /*
+         * Procura a posição do produto na tabela de descontos e com essa posição,
+         * procura o valor do
+         * desconto e adiciona no carrinho.
+         */
 
         int posicaoDesconto = obterPosicaoValorEmTabela(produtosPromocaoSazonal, TABELA_PROMOCAO_COLUNA_CODIGO,
                 produto[TABELA_SISTEMA_COLUNA_CODIGO]);
 
-                String precoFinal = " ";
-                String desconto;
-
+        String precoFinal = " ";
+        String desconto;
 
         if (posicaoDesconto != -1) {
 
             desconto = produtosPromocaoSazonal[posicaoDesconto][TABELA_PROMOCAO_COLUNA_DESCONTO];
 
             precoFinal = produtosPromocaoSazonal[posicaoDesconto][TABELA_PROMOCAO_COLUNA_PRECO_FINAL];
-            
-        }else{
+
+        } else {
             desconto = "0";
         }
 
@@ -311,6 +307,7 @@ public class Trabalho4BI_CaixaDeMercado {
                 carrinho[i][TABELA_CARRINHO_COLUNA_PRECO] = produto[TABELA_SISTEMA_COLUNA_PRECO];
                 carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] = desconto;
                 carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL] = precoFinal;
+                carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS] = "1"; // Inicializa com um produto
                 break;
             }
         }
@@ -322,8 +319,10 @@ public class Trabalho4BI_CaixaDeMercado {
     public static String[][] acharProdutoSistema(String[][] carrinho, String produto,
             String[][] produtosPromoçãoSazonal) {
 
-        /* Verificar se os produtos estão no sistema, limpando assim o carrinho de
-        codigos errados.*/
+        /*
+         * Verificar se os produtos estão no sistema, limpando assim o carrinho de
+         * codigos errados.
+         */
 
         String[][] tabelaPrecos = obterTabelaPrecos();
 
@@ -337,8 +336,11 @@ public class Trabalho4BI_CaixaDeMercado {
             return carrinho;
 
         }
-        /*  procura se o produto ja foi posto alguma vez anteriormente, se sim, o soma, se não, 
-        o adiciona.*/
+        /*
+         * procura se o produto ja foi posto alguma vez anteriormente, se sim, o soma,
+         * se não,
+         * o adiciona.
+         */
 
         int posicaoProdutoCarrinho = obterPosicaoValorEmTabela(carrinho, TABELA_CARRINHO_COLUNA_CODIGO, produto);
 
@@ -352,11 +354,11 @@ public class Trabalho4BI_CaixaDeMercado {
 
             // se conseguir, irá soma-lo.
 
-            //trasnforma para int e soma
+            // trasnforma para int e soma
             int qntProdutos = Integer.parseInt(carrinho[posicaoProdutoCarrinho][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
             qntProdutos++;
 
-            //transforma novamente para string
+            // transforma novamente para string
             carrinho[posicaoProdutoCarrinho][TABELA_CARRINHO_COLUNA_QNTPRODUTOS] = Integer
                     .toString(qntProdutos);
 
@@ -376,7 +378,7 @@ public class Trabalho4BI_CaixaDeMercado {
         imprimir("SCANNER");
 
         while (true) {
-            
+
             imprimir("Digite o código do produto.(S para sair)");
             produto = lerTexto();
             pularLinha();
@@ -393,37 +395,37 @@ public class Trabalho4BI_CaixaDeMercado {
 
     }
 
-    
-
     public static float somaPreçoTotal(String[][] carrinho) {
 
-        //somar todos os preços, com descontos ou não, no valor final da compra
+        // somar todos os preços, com descontos ou não, no valor final da compra
         float somaPrecoTotal = 0;
 
         for (int i = 1; i < carrinho.length; i++) {
 
-            if (carrinho[i][2] != null && !carrinho[i][TABELA_CARRINHO_COLUNA_PRECO].trim().isEmpty()) {
-                 if (carrinho[i][3].equals("0")) {
-                    somaPrecoTotal = somaPrecoTotal + Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO]);
-                    
-                 }else{
-                     somaPrecoTotal = somaPrecoTotal + Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]);
-                 }
+            if (!carrinho[i][TABELA_CARRINHO_COLUNA_PRECO].trim().isEmpty()) {
+                if (carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO].equals("0")) {
+                    somaPrecoTotal += Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO])
+                            * Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
+
+                } else {
+                    somaPrecoTotal += Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL])
+                            * Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
+
+                }
             }
         }
 
         return somaPrecoTotal;
     }
 
-    
-
     public static Transacao pagamento(float totalCompra) {
-        //classe para armazenar o valor em dinheiro que o cliente deu como pagamento e o troco
+        // classe para armazenar o valor em dinheiro que o cliente deu como pagamento e
+        // o troco
         Transacao cliente = new Transacao();
         cliente.quantiaDada = 0;
         cliente.troco = 0;
 
-        //loop para que a operação só seja finalizada caso o dinheiro seja o suficiente
+        // loop para que a operação só seja finalizada caso o dinheiro seja o suficiente
         while (true) {
             imprimir("Informe quantia dada pelo cliente");
             cliente.quantiaDada = lerValorReal();
@@ -435,15 +437,14 @@ public class Trabalho4BI_CaixaDeMercado {
                 pularLinha();
                 imprimir("PAGAMENTO INSUFICIENTE");
                 imprimir("Tente um novo valor");
-            } 
+            }
         }
-        
 
         return cliente;
     }
 
     public static float calcularTroco(float total, float pagamento) {
-        //calculando o troco
+        // calculando o troco
         float troco = 0;
 
         troco = pagamento - troco;
@@ -451,89 +452,113 @@ public class Trabalho4BI_CaixaDeMercado {
         return troco;
     }
 
-    public static void imprimirNotaFiscal(String[][] carrinho, float somaPrecoTotal, float troco, float quantiaCliente) {
+    public static void imprimirNotaFiscal(String[][] carrinho, float somaPrecoTotal, float troco,
+            float quantiaCliente) {
 
-        //loop para aceitar somente caracteres válidos
-            while (true) {
-                pularLinha();
-                imprimir("Imprimir nota fiscal?(S para sim ou N para não)");
-                String finalizar = lerTexto();
+        // loop para aceitar somente caracteres válidos
+        while (true) {
+            pularLinha();
+            imprimir("Imprimir nota fiscal?(S para sim ou N para não)");
+            String finalizar = lerTexto();
 
-                if (finalizar.equalsIgnoreCase("S")) {
-                    
-                    float vlTotal = 0;
+            if (finalizar.equalsIgnoreCase("S")) {
 
-        // impresão da nota fiscal
+                float vlTotal = 0;
+                int qntItems = 0;
 
-        System.out.print("__________________________________________\n" +
-                "|       M² Comercio de Alimentos           |\n" +
-                "|          Centro, Cascavel Pr             |\n" +
-                "|__________________________________________|\n" +
-                "|------------------------------------------|\n" +
-                "|Codigo   Descrição   Qnt Vl.Unit Vl.Total |\n" +
-                "|                                          |\n");
+                // impresão da nota fiscal
 
-        for (int i = 0; i < carrinho.length; i++) {
-            if (!carrinho[i][TABELA_CARRINHO_COLUNA_NOME].equals(" ")) {
-                
-
-            vlTotal = Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO])
-                    * Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
-
-            System.out.printf("|s%        s%        s%        s%        f.2%|", carrinho[i][TABELA_CARRINHO_COLUNA_CODIGO],
-                    carrinho[i][TABELA_CARRINHO_COLUNA_NOME], carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS],
-                    carrinho[i][TABELA_CARRINHO_COLUNA_PRECO], vlTotal);
-                    }
-        }
-
-        System.out.printf("|------------------------------------------|\n" +
-                "|Produtos Promocao  Desconto  Preço Final  |");
-
-        for (int i = 0; i < carrinho.length; i++) {
-
-            if (carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] != "0") {
-
-                System.out.printf("|s%                     s%                s%      |", carrinho[i][TABELA_CARRINHO_COLUNA_NOME],
-                        carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO], carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]);
-
-            }
-
-        }
-
-        System.out.printf("|------------------------------------------|\n" +
-                "|SUBTOTAL                             f.2% |\n",
-                somaPrecoTotal +
-                        "|------------------------------------------|\n" +
-                        "|Total de Items                         d% |\n",
-                carrinho.length +
-                        "|Valor Total R$                       f.2% |\n",
-                somaPrecoTotal +
-                        "|Forma de Pagamento              Valor Pago|\n" +
-                        "|Dinheiro                             f.2% |\n",
-                quantiaCliente +
-                        "|Troco                                f.2% |\n",
-                troco +
+                System.out.print("___________________________________________\n" +
+                        "|       M² Comercio de Alimentos           |\n" +
+                        "|          Centro, Cascavel Pr             |\n" +
                         "|__________________________________________|\n" +
-                        "|     OBRIDADO POR ESCOLHER MERCADOS M²    |\n" +
-                        "|              VOLTE SEMPRE!!              |\n" +
-                        "|__________________________________________|");
+                        "|------------------------------------------|\n" +
+                        "|Codigo   Descrição   Qnt Vl.Unit Vl.Total |\n" +
+                        "|                                          |\n");
 
+                for (int i = 0; i < carrinho.length; i++) {
+                    if (!carrinho[i][TABELA_CARRINHO_COLUNA_NOME].equals(" ")) {
 
-                }else if (finalizar.equalsIgnoreCase("N")) {
-                    break;
-                }else{
-                    imprimir("entrada inválida");
-                    imprimir("tente novamente");
-                } 
+                        qntItems += Integer.parseInt(carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
+
+                        vlTotal = Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO])
+                                * Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS]);
+
+                        System.out.printf("|%-8s %-11s %-5s R$%-4.2f R$%-6.2f|\n",
+                                carrinho[i][TABELA_CARRINHO_COLUNA_CODIGO],
+                                carrinho[i][TABELA_CARRINHO_COLUNA_NOME],
+                                carrinho[i][TABELA_CARRINHO_COLUNA_QNTPRODUTOS],
+                                Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECO]),
+                                vlTotal);
+
+                    }
+                }
+
+                System.out.printf("|------------------------------------------|\n");
+
+                int valorExistente = 0;
+
+                for (int i = 0; i < carrinho.length; i++) {
+
+                    if (carrinho[i][TABELA_CARRINHO_COLUNA_NOME] != " ") {
+
+                        if (carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] != "0") {
+
+                            valorExistente = 1;
+                            break;
+
+                        }
+                    }
+                }
+
+                if (valorExistente == 1) {
+
+                    System.out.printf("|Produtos Promocao  Desconto  Preço Final  |\n");
+
+                    for (int i = 0; i < carrinho.length; i++) {
+
+                        if (carrinho[i][TABELA_CARRINHO_COLUNA_NOME] != " ") {
+
+                            if (carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO] != "0") {
+
+                                System.out.printf("|%s             %-8.1f%%  R$%-2.2f      |\n",
+                                        carrinho[i][TABELA_CARRINHO_COLUNA_NOME],
+                                        Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_DESCONTO]),
+                                        Float.parseFloat(carrinho[i][TABELA_CARRINHO_COLUNA_PRECOFINAL]));
+
+                            }
+
+                        }
+
+                    }
+                }
+
+                System.out.printf("|------------------------------------------|\n");
+                System.out.printf("|SUBTOTAL                             %.2f|\n", somaPrecoTotal);
+                System.out.printf("|------------------------------------------|\n");
+                System.out.printf("|Total de Items                          %d|\n", qntItems);
+                System.out.printf("|Valor Total R$                       %.2f|\n", somaPrecoTotal);
+                System.out.printf("|Forma de Pagamento              Valor Pago|\n");
+                System.out.printf("|Dinheiro                            %.2f|\n", quantiaCliente);
+                System.out.printf("|Troco                                %.2f|\n", troco);
+                System.out.printf("|__________________________________________|\n");
+                System.out.printf("|     OBRIDADO POR ESCOLHER MERCADOS M²    |\n");
+                System.out.printf("|              VOLTE SEMPRE!!              |\n");
+                System.out.printf("|__________________________________________|");
+
+            } else if (finalizar.equalsIgnoreCase("N")) {
+                break;
+            } else {
+                imprimir("entrada inválida");
+                imprimir("tente novamente");
             }
+        }
 
-        
     }
 
-    
+    // Método para simular la lectura de texto (en lugar de lerTexto)
 
     public static void main(String[] args) {
-        
 
         imprimir("DIGITE 1 PARA INICIAR OPERAÇÃO.");
         int iniciarOperacao = lerValorInteiro();
@@ -546,13 +571,11 @@ public class Trabalho4BI_CaixaDeMercado {
 
             produtosPromocaoSazonal = acharClienteCadastrado(estacao);
 
-
             String[][] carrinho = passarProdutos(produtosPromocaoSazonal);
 
             float total = somaPreçoTotal(carrinho);
             pularLinha();
             System.out.printf("Valor total da compra: R$%.2f %n", total);
-
 
             Transacao cliente = pagamento(total);
             pularLinha();
@@ -560,9 +583,8 @@ public class Trabalho4BI_CaixaDeMercado {
 
             imprimirNotaFiscal(carrinho, total, cliente.troco, cliente.quantiaDada);
 
-            
             imprimir("OPERAÇÃO FINALIZADA");
-        }else{
+        } else {
             imprimir("TENHA UM BOM DIA!");
         }
     }
